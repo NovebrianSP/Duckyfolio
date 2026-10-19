@@ -279,7 +279,7 @@ export default function ProjectPage() {
                   isDarkMode={isDarkMode}
                 />
                 . Dalam mengembangkan ekosistem web dan mobile, saya
-                berpengalaman menggunakan kombinasi *tech stack* modern seperti{" "}
+                berpengalaman menggunakan kombinasi tech stack modern seperti{" "}
                 <Highlight tech={TECH_STACKS.laravel} isDarkMode={isDarkMode} />
                 ,{" "}
                 <Highlight
