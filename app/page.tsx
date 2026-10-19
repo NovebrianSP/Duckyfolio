@@ -2,12 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { Sun, Moon, ArrowRight } from "lucide-react";
+import { Sun, Moon, ArrowRight, RotateCcw } from "lucide-react";
 import Image from "next/image";
+import { useTheme } from "@/components/ThemeProvider";
 import { useWaveTransition } from "@/components/WaveTransition";
 
 export default function WaterPortfolio() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const {
+    theme,
+    isDarkMode,
+    hasManualOverride,
+    resetToAutomatic,
+    toggleDarkMode,
+  } = useTheme();
   const [ripples, setRipples] = useState<{ id: number; x: number; y: number }[]>([]);
   const { navigate } = useWaveTransition();
 
@@ -27,9 +34,13 @@ export default function WaterPortfolio() {
   return (
     <div
       className={`min-h-screen transition-colors duration-1000 ease-in-out relative overflow-hidden flex flex-col justify-center items-center px-4 ${
-        isDarkMode
+        theme === "midnight"
           ? "bg-gradient-to-b from-[#0B192C] via-[#050C14] to-[#02060d] text-slate-100"
-          : "bg-gradient-to-b from-[#E0F4FF] via-[#87C4FF] to-[#39A7FF] text-slate-900"
+          : theme === "sunset"
+            ? "bg-gradient-to-b from-[#FDBA74] via-[#F97316] to-[#7C2D12] text-white"
+            : theme === "dawn"
+              ? "bg-gradient-to-b from-[#FFF1D6] via-[#F8C58A] to-[#E68A63] text-[#3B2A2A]"
+              : "bg-gradient-to-b from-[#E0F4FF] via-[#87C4FF] to-[#39A7FF] text-slate-900"
       }`}
     >
       {ripples.map((ripple) => (
@@ -47,14 +58,29 @@ export default function WaterPortfolio() {
         />
       ))}
 
-      <button
-        onClick={() => setIsDarkMode(!isDarkMode)}
-        className={`fixed bottom-6 right-6 z-50 flex items-center justify-center transition-all duration-300 ease-in-out border rounded-full shadow-2xl p-4 w-14 h-14 hover:scale-95 active:scale-90 ${
-          isDarkMode ? "bg-[#1E3E62] text-yellow-400 border-slate-700 hover:bg-[#152C46]" : "bg-white text-indigo-900 border-blue-200 hover:bg-slate-50"
-        }`}
-      >
-        {isDarkMode ? <Sun size={24} className="flex-shrink-0" /> : <Moon size={24} className="flex-shrink-0" />}
-      </button>
+      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2">
+        {hasManualOverride && (
+          <button
+            type="button"
+            onClick={resetToAutomatic}
+            aria-label="Kembali ke tema otomatis berdasarkan waktu"
+            title="Kembali ke tema otomatis"
+            className="flex h-12 items-center gap-2 rounded-full border border-white/40 bg-black/20 px-4 text-sm font-semibold text-white shadow-2xl backdrop-blur-md transition-all hover:scale-95 active:scale-90"
+          >
+            <RotateCcw size={18} />
+            Otomatis
+          </button>
+        )}
+        <button
+          onClick={toggleDarkMode}
+          aria-label="Ganti tema manual"
+          className={`flex items-center justify-center transition-all duration-300 ease-in-out border rounded-full shadow-2xl p-4 w-14 h-14 hover:scale-95 active:scale-90 ${
+            isDarkMode ? "bg-[#1E3E62] text-yellow-400 border-slate-700 hover:bg-[#152C46]" : "bg-white text-indigo-900 border-blue-200 hover:bg-slate-50"
+          }`}
+        >
+          {isDarkMode ? <Sun size={24} className="flex-shrink-0" /> : <Moon size={24} className="flex-shrink-0" />}
+        </button>
+      </div>
 
       <div className="absolute top-20 z-0 flex items-center justify-center pointer-events-none">
         {isDarkMode ? (

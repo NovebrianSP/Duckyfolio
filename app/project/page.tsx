@@ -10,12 +10,22 @@ import {
   User,
   Briefcase,
   ExternalLink,
+  RotateCcw,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { projects } from "@/data/projects";
+import { useTheme } from "@/components/ThemeProvider";
 import { useWaveTransition } from "@/components/WaveTransition";
 
 export default function ProjectPage() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const {
+    theme,
+    isDarkMode,
+    hasManualOverride,
+    resetToAutomatic,
+    toggleDarkMode,
+  } = useTheme();
   const [ripples, setRipples] = useState<
     { id: number; x: number; y: number }[]
   >([]);
@@ -85,31 +95,16 @@ export default function ProjectPage() {
     );
   };
 
-  const projects = [
-    {
-      id: 1,
-      title: "E-Commerce Danau Hijau",
-      desc: "Platform belanja online ramah lingkungan berbasis Next.js App Router dan Sanity CMS.",
-      tech: ["Next.js", "Tailwind", "Sanity"],
-    },
-    {
-      id: 2,
-      title: "Sistem Tracker Kawanan Bebek",
-      desc: "Aplikasi pelacak migrasi unggas real-time menggunakan integrasi WebSocket dan Leaflet Maps.",
-      tech: ["React", "Node.js", "Socket.io"],
-    },
-    {
-      id: 3,
-      title: "Weather App Aliran Sungai",
-      desc: "Prediksi cuaca dan debit air sungai akurat menggunakan integrasi OpenWeather API resmi.",
-      tech: ["Next.js", "TypeScript", "Tailwind"],
-    },
-  ];
-
   return (
     <div
-      className={`min-h-screen flex flex-col items-center px-4 pt-40 pb-24 transition-colors duration-1000 ease-in-out relative overflow-hidden no-scrollbar ${
-        isDarkMode ? "bg-[#050C14] text-slate-100" : "bg-[#1A74E2] text-white"
+      className={`min-h-screen flex flex-col items-center px-4 pt-28 pb-24 transition-colors duration-1000 ease-in-out relative overflow-x-hidden no-scrollbar ${
+        theme === "midnight"
+          ? "bg-[#050C14] text-slate-100"
+          : theme === "sunset"
+            ? "bg-gradient-to-b from-[#F97316] via-[#C2410C] to-[#7C2D12] text-white"
+            : theme === "dawn"
+              ? "bg-gradient-to-b from-[#F8C58A] via-[#E68A63] to-[#C2410C] text-white"
+              : "bg-[#1A74E2] text-white"
       }`}
     >
       {ripples.map((ripple) => (
@@ -178,12 +173,28 @@ export default function ProjectPage() {
         </motion.div>
       </div>
 
-      <button
-        onClick={() => setIsDarkMode(!isDarkMode)}
-        className={`fixed bottom-6 right-6 z-50 flex items-center justify-center border rounded-full shadow-2xl p-4 w-14 h-14 ${isDarkMode ? "bg-[#1E3E62] text-yellow-400 border-slate-700" : "bg-white text-indigo-900 border-blue-200"}`}
-      >
-        {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
-      </button>
+      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2">
+        {hasManualOverride && (
+          <button
+            type="button"
+            onClick={resetToAutomatic}
+            aria-label="Kembali ke tema otomatis berdasarkan waktu"
+            title="Kembali ke tema otomatis"
+            className="flex h-12 items-center gap-2 rounded-full border border-white/40 bg-black/20 px-4 text-sm font-semibold text-white shadow-2xl backdrop-blur-md transition-all hover:scale-95 active:scale-90"
+          >
+            <RotateCcw size={18} />
+            Otomatis
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={toggleDarkMode}
+          aria-label="Ganti tema manual"
+          className={`flex items-center justify-center border rounded-full shadow-2xl p-4 w-14 h-14 ${isDarkMode ? "bg-[#1E3E62] text-yellow-400 border-slate-700" : "bg-white text-indigo-900 border-blue-200"}`}
+        >
+          {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+        </button>
+      </div>
 
       <div className="absolute top-4 opacity-15 pointer-events-none z-0">
         {isDarkMode ? (
@@ -213,19 +224,17 @@ export default function ProjectPage() {
         )}
       </div>
 
-      <div className="max-w-4xl w-full mb-12 z-20 relative">
-        <button
-          type="button"
-          onClick={() => void navigate("/")}
-          className={`px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-md border backdrop-blur-md ${
-            isDarkMode
-              ? "bg-slate-900/80 border-slate-700 text-cyan-400 hover:bg-slate-900"
-              : "bg-white/80 border-blue-200 text-blue-700 hover:bg-white"
-          }`}
-        >
-          <ArrowLeft size={18} /> Kembali ke Permukaan
-        </button>
-      </div>
+      <button
+        type="button"
+        onClick={() => void navigate("/", "Naik ke permukaan...")}
+        className={`fixed bottom-6 left-6 z-50 px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-md border backdrop-blur-md ${
+          isDarkMode
+            ? "bg-slate-900/80 border-slate-700 text-cyan-400 hover:bg-slate-900"
+            : "bg-white/80 border-blue-200 text-blue-700 hover:bg-white"
+        }`}
+      >
+        <ArrowLeft size={18} /> Kembali ke Permukaan
+      </button>
 
       <div className="max-w-4xl w-full space-y-24 z-20 relative">
         <motion.div
@@ -319,45 +328,57 @@ export default function ProjectPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project) => (
-              <motion.div
+              <Link
                 key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -6 }}
-                className={`p-6 rounded-2xl border backdrop-blur-md text-left flex flex-col justify-between transition-all group ${isDarkMode ? "bg-slate-900/50 border-slate-800/80 hover:border-cyan-400" : "bg-white/10 border-white/10 hover:border-white"}`}
+                href={`/project/showcase/${project.id}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  void navigate(
+                    `/project/showcase/${project.id}`,
+                    "Masuk showcase...",
+                  );
+                }}
+                className="block h-full"
               >
-                <div>
-                  <div className="flex justify-between items-start mb-4">
-                    <div
-                      className={`p-3 rounded-xl ${isDarkMode ? "bg-slate-800" : "bg-white/20"}`}
-                    >
-                      <Code size={22} />
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -6 }}
+                  className={`h-full min-h-[290px] p-6 rounded-2xl border backdrop-blur-md text-left flex flex-col justify-between transition-all group ${isDarkMode ? "bg-slate-900/50 border-slate-800/80 hover:border-cyan-400" : "bg-white/10 border-white/10 hover:border-white"}`}
+                >
+                  <div>
+                    <div className="flex justify-between items-start mb-4">
+                      <div
+                        className={`p-3 rounded-xl ${isDarkMode ? "bg-slate-800" : "bg-white/20"}`}
+                      >
+                        <Code size={22} />
+                      </div>
+                      <span className="opacity-60 group-hover:opacity-100">
+                        <ExternalLink size={18} />
+                      </span>
                     </div>
-                    <a href="#" className="opacity-60 hover:opacity-100">
-                      <ExternalLink size={18} />
-                    </a>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-300 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p
-                    className={`text-sm mb-6 ${isDarkMode ? "text-slate-400" : "text-blue-100"}`}
-                  >
-                    {project.desc}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className={`text-xs font-semibold px-2.5 py-1 rounded-md ${isDarkMode ? "bg-slate-800 text-cyan-400" : "bg-blue-900/40 text-blue-100 border border-white/10"}`}
+                    <h3 className="line-clamp-2 text-xl font-bold mb-2 group-hover:text-cyan-300 transition-colors">
+                      {project.title}
+                    </h3>
+                    <p
+                      className={`project-description-clamp min-h-[4.5rem] text-sm mb-6 ${isDarkMode ? "text-slate-400" : "text-blue-100"}`}
                     >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
+                      {project.desc}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className={`text-xs font-semibold px-2.5 py-1 rounded-md ${isDarkMode ? "bg-slate-800 text-cyan-400" : "bg-blue-900/40 text-blue-100 border border-white/10"}`}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>

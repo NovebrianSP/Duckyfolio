@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import ThemeProvider from "@/components/ThemeProvider";
 import WaveTransition from "@/components/WaveTransition";
 
 const geistSans = Geist({
@@ -28,8 +29,9 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className={inter.className}>
-        {/* Bungkus children dengan efek transisi ombak */}
-        <WaveTransition>{children}</WaveTransition>
+        <ThemeProvider>
+          <WaveTransition>{children}</WaveTransition>
+        </ThemeProvider>
       </body>
     </html>
   );

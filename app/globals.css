@@ -39,6 +39,13 @@ body::-webkit-scrollbar {
 }
 
 @layer utilities {
+  .project-description-clamp {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
   /* Menyembunyikan scrollbar untuk Chrome, Safari, dan Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -49,4 +56,3 @@ body::-webkit-scrollbar {
     scrollbar-width: none;  /* Firefox */
   }
 }
-
