@@ -258,7 +258,7 @@ export default function ProjectPage() {
             </div>
             <div className="md:col-span-2 space-y-4 text-lg leading-relaxed opacity-90">
               <p>
-                Saya adalah <span className={isDarkMode ? "text-cyan-400" : "text-blue-600"}>Novebrian Setya Purwanto</span>, seorang{" "}
+                Saya adalah <span className={isDarkMode ? "text-cyan-400" : "text-[#1E3E62]"}>Novebrian Setya Purwanto</span>, seorang{" "}
                 <span
                   className={`font-bold ${isDarkMode ? "text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.3)]" : "text-[#0A3981]"}`}
                 >
