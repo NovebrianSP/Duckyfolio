@@ -71,7 +71,7 @@ export default function WaterPortfolio() {
 
       <div className="z-30 text-center space-y-6 mb-20 relative">
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight drop-shadow-sm">
-          Halo, Saya <span className={isDarkMode ? "text-cyan-400" : "text-blue-600"}>Bebek Tech</span>
+          Halo, Saya <span className={isDarkMode ? "text-cyan-400" : "text-blue-600"}>Novebrian Setya Purwanto</span>
         </h1>
         <p className="text-xl md:text-2xl max-w-lg mx-auto font-medium opacity-80">
           Mengarungi lautan kode dan menyelami ekosistem web dengan tenang seperti di danau.
