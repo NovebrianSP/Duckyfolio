@@ -226,96 +226,19 @@ export default function ProjectPage() {
 
       <button
         type="button"
-        onClick={() => void navigate("/", "Naik ke permukaan...")}
-        className={`fixed bottom-6 left-6 z-50 px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-md border backdrop-blur-md ${
+        onClick={() => void navigate("/about", "Naik ke permukaan...")}
+        aria-label="Kembali ke penyelam"
+        className={`fixed bottom-6 left-6 z-50 flex items-center gap-0 rounded-full border p-3 font-semibold shadow-md backdrop-blur-md transition-all active:scale-95 sm:gap-2 sm:px-5 sm:py-2.5 ${
           isDarkMode
             ? "bg-slate-900/80 border-slate-700 text-cyan-400 hover:bg-slate-900"
             : "bg-white/80 border-blue-200 text-blue-700 hover:bg-white"
         }`}
       >
-        <ArrowLeft size={18} /> Kembali ke Permukaan
+        <ArrowLeft size={18} />
+        <span className="hidden sm:inline">Kembali ke penyelam</span>
       </button>
 
       <div className="max-w-4xl w-full space-y-24 z-20 relative">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className={`p-8 md:p-10 rounded-3xl border backdrop-blur-lg ${isDarkMode ? "bg-slate-900/40 border-slate-800" : "bg-white/10 border-white/20"}`}
-        >
-          <div className="flex items-center gap-3 mb-6">
-            <User
-              className={isDarkMode ? "text-cyan-400" : "text-blue-200"}
-              size={28}
-            />
-            <h2 className="text-3xl font-bold tracking-tight">
-              Tentang Penyelam Kode
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            <div className="relative w-32 h-32 mx-auto md:mx-0 rounded-full overflow-hidden border-4 border-white/60 bg-gradient-to-br from-white/40 via-sky-200/30 to-blue-500/30 shadow-[inset_-8px_-10px_18px_rgba(30,116,226,0.28),inset_8px_8px_14px_rgba(255,255,255,0.65),0_10px_24px_rgba(7,67,145,0.3)] flex items-center justify-center text-5xl">
-              <Image
-                src="/profile.png"
-                alt="Bebek Tech"
-                fill
-                className="object-cover object-[center_top]"
-                style={{ transform: "scale(2) translateY(30%)" }}
-                priority
-              />
-              <span className="pointer-events-none absolute top-1 left-2 h-5 w-10 rotate-[-25deg] rounded-full bg-white/55 blur-[1px]" />
-              <span className="pointer-events-none absolute top-7 left-2 h-2 w-2 rounded-full bg-white/70" />
-            </div>
-            <div className="md:col-span-2 space-y-4 text-lg leading-relaxed opacity-90">
-              <p>
-                Saya adalah <span className={isDarkMode ? "text-cyan-400" : "text-[#1E3E62]"}>Novebrian Setya Purwanto</span>, seorang{" "}
-                <span
-                  className={`font-bold ${isDarkMode ? "text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.3)]" : "text-[#0A3981]"}`}
-                >
-                  Junior Full Stack Developer
-                </span>{" "}
-                dengan filosofi seperti bebek di atas danau: tampak tenang di
-                permukaan, namun terus mengayuh kaki dengan kerja keras di bawah
-                air.
-              </p>
-
-              <p>
-                Fokus utama saya adalah membangun arsitektur aplikasi yang kokoh
-                dan interaktif, baik pada sisi{" "}
-                <Highlight tech={TECH_STACKS.backend} isDarkMode={isDarkMode} />{" "}
-                maupun{" "}
-                <Highlight
-                  tech={TECH_STACKS.frontend}
-                  isDarkMode={isDarkMode}
-                />
-                . Dalam mengembangkan ekosistem web dan mobile, saya
-                berpengalaman menggunakan kombinasi tech stack modern seperti{" "}
-                <Highlight tech={TECH_STACKS.laravel} isDarkMode={isDarkMode} />
-                ,{" "}
-                <Highlight
-                  tech={TECH_STACKS.codeigniter}
-                  isDarkMode={isDarkMode}
-                />
-                ,{" "}
-                <Highlight
-                  tech={TECH_STACKS.bootstrap}
-                  isDarkMode={isDarkMode}
-                />
-                ,{" "}
-                <Highlight
-                  tech={TECH_STACKS.tailwind}
-                  isDarkMode={isDarkMode}
-                />
-                ,{" "}
-                <Highlight tech={TECH_STACKS.framer} isDarkMode={isDarkMode} />,{" "}
-                <Highlight tech={TECH_STACKS.nextjs} isDarkMode={isDarkMode} />,{" "}
-                <Highlight tech={TECH_STACKS.flutter} isDarkMode={isDarkMode} />
-                , serta{" "}
-                <Highlight tech={TECH_STACKS.kotlin} isDarkMode={isDarkMode} />.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
         <div className="space-y-8">
           <div className="flex items-center gap-3">
             <Briefcase

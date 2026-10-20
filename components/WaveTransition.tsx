@@ -37,36 +37,48 @@ export default function WaveTransition({
   const router = useRouter();
   const controls = useAnimation();
   const isNavigating = useRef(false);
+  const coverAnimation = useRef<Promise<void> | null>(null);
   const [transitionMessage, setTransitionMessage] = useState("Menyelam...");
   const handleReveal = useCallback(() => {
     isNavigating.current = false;
+    coverAnimation.current = null;
   }, []);
 
-  const navigate = async (href: string, message = "Menyelam...") => {
+  const startTransition = useCallback(async (message = "Menyelam...") => {
     if (isNavigating.current) return;
 
     isNavigating.current = true;
     setTransitionMessage(message);
 
     try {
-      await controls.start({
+      const animation = controls.start({
         y: "0%",
         transition: { duration: 0.6, ease: [0.25, 1, 0.5, 1] },
       });
-
-      router.push(href);
+      coverAnimation.current = animation;
+      await animation;
     } catch (error) {
       isNavigating.current = false;
+      coverAnimation.current = null;
       throw error;
     }
-  };
+  }, [controls]);
+
+  const navigate = useCallback(async (href: string, message = "Menyelam...") => {
+    await startTransition(message);
+    router.push(href);
+  }, [router, startTransition]);
+
+  const getCoverAnimation = useCallback(() => coverAnimation.current, []);
 
   return (
     <WaveTransitionContext.Provider value={{ navigate }}>
       <Suspense fallback={children}>
         <WaveTransitionContent
           controls={controls}
+          getCoverAnimation={getCoverAnimation}
           onReveal={handleReveal}
+          startTransition={startTransition}
           transitionMessage={transitionMessage}
         >
           {children}
@@ -79,15 +91,20 @@ export default function WaveTransition({
 function WaveTransitionContent({
   children,
   controls,
+  getCoverAnimation,
   onReveal,
+  startTransition,
   transitionMessage,
 }: {
   children: React.ReactNode;
   controls: ReturnType<typeof useAnimation>;
+  getCoverAnimation: () => Promise<void> | null;
   onReveal: () => void;
+  startTransition: (message?: string) => Promise<void>;
   transitionMessage: string;
 }) {
   const pathname = usePathname();
+  const previousPathname = useRef(pathname);
   const [displayChildren, setDisplayChildren] = useState(children);
 
   useEffect(() => {
@@ -95,18 +112,40 @@ function WaveTransitionContent({
   }, [pathname, children]);
 
   useEffect(() => {
+    if (previousPathname.current === pathname) return;
+
+    previousPathname.current = pathname;
+    void startTransition().catch((error) => {
+      console.error("Wave transition gagal saat navigasi browser.", error);
+    });
+  }, [pathname, startTransition]);
+
+  useEffect(() => {
+    let cancelled = false;
+
     const revealPage = async () => {
+      const activeCoverAnimation = getCoverAnimation();
+      if (activeCoverAnimation) {
+        await activeCoverAnimation;
+      }
+
       await new Promise((resolve) => setTimeout(resolve, 150));
+      if (cancelled) return;
 
       await controls.start({
         y: "120%",
         transition: { duration: 0.7, ease: [0.25, 1, 0.5, 1] },
       });
-      onReveal();
+      if (!cancelled) {
+        onReveal();
+      }
     };
 
     void revealPage();
-  }, [pathname, controls, onReveal]);
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname, controls, getCoverAnimation, onReveal]);
 
   return (
     <div className="relative w-full min-h-screen">
@@ -146,7 +185,7 @@ function WaveTransitionContent({
             />
           </motion.div>
           <span className="tracking-wider opacity-90 text-xl font-medium">
-          {transitionMessage}
+            {transitionMessage}
           </span>
         </div>
       </motion.div>

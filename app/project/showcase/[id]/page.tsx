@@ -158,10 +158,11 @@ function ShowcaseContent() {
           <button
             type="button"
             onClick={() => void navigate("/project", "Kembali ke project...")}
-            className="fixed bottom-6 left-6 z-50 flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2.5 font-semibold shadow-md backdrop-blur-md transition hover:bg-white/20"
+            aria-label="Kembali ke proyek"
+            className="fixed bottom-6 left-6 z-50 flex items-center gap-0 rounded-full border border-white/30 bg-white/10 p-3 font-semibold shadow-md backdrop-blur-md transition hover:bg-white/20 sm:gap-2 sm:px-5 sm:py-2.5"
           >
             <ArrowLeft size={18} />
-            Kembali ke proyek
+            <span className="hidden sm:inline">Kembali ke proyek</span>
           </button>
           <div className="flex items-center gap-2">
             {hasManualOverride && (
@@ -208,7 +209,7 @@ function ShowcaseContent() {
               src={project.image}
               alt={`Foto ${project.title}`}
               fill
-              className="object-contain p-12 drop-shadow-2xl"
+              className="object-cover drop-shadow-2xl"
               onLoad={(event) => {
                 const { naturalWidth, naturalHeight } = event.currentTarget;
                 setImageOrientation(
@@ -257,6 +258,18 @@ function ShowcaseContent() {
                 <p className="text-lg font-semibold">{project.createdAt}</p>
               </div>
             </div>
+
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-cyan-300/60 px-5 py-2.5 font-semibold text-cyan-200 transition hover:bg-cyan-400/15 hover:text-white"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
+                <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2.17c-3.22.7-3.9-1.36-3.9-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.57-.29-5.27-1.29-5.27-5.74 0-1.27.45-2.3 1.2-3.11-.12-.29-.52-1.47.11-3.07 0 0 .98-.31 3.16 1.19a10.9 10.9 0 0 1 5.76 0c2.18-1.5 3.16-1.19 3.16-1.19.63 1.6.23 2.78.11 3.07.75.81.2 1.84 1.2 3.11 0 4.46-2.71 5.45-5.29 5.74.41.36.78 1.08.78 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z" />
+              </svg>
+              Lihat repository GitHub
+            </a>
           </div>
         </motion.section>
       </div>

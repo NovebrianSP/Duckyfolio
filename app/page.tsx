@@ -111,7 +111,7 @@ export default function WaterPortfolio() {
 
         <button
           type="button"
-          onClick={() => void navigate("/project")}
+          onClick={() => void navigate("/about")}
           className={`mt-4 px-8 py-3 rounded-full font-bold flex items-center gap-2 mx-auto transition-all active:scale-95 shadow-md ${
             isDarkMode ? "bg-cyan-500 text-slate-900 hover:bg-cyan-400" : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
