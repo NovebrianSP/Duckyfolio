@@ -512,7 +512,7 @@ export default function AboutPage() {
                   <h3 className={isDarkMode ? "text-cyan-400 font-bold mb-3" : "text-[#EDC92C] mb-3 font-bold"}>
                     Web Development
                   </h3>
-                  <p className="leading-relaxed opacity-90">
+                  <p className="text-justify leading-relaxed opacity-90">
                     PHP, CSS, JavaScript, MySQL, Python, CodeIgniter 3 & 4, Laravel,
                     Bootstrap, Tailwind CSS, Next.js, and Framer Motion.
                   </p>
@@ -521,7 +521,7 @@ export default function AboutPage() {
                   <h3 className={isDarkMode ? "text-cyan-400 font-bold mb-3" : "text-[#EDC92C] mb-3 font-bold"}>
                     Mobile Development
                   </h3>
-                  <p className="leading-relaxed opacity-90">
+                  <p className="text-justify leading-relaxed opacity-90">
                     Flutter, Dart, Kotlin, and responsive, user-friendly mobile
                     application development.
                   </p>
@@ -530,7 +530,7 @@ export default function AboutPage() {
                   <h3 className={isDarkMode ? "text-cyan-400 font-bold mb-3" : "text-[#EDC92C] mb-3 font-bold"}>
                     Tools and Languages
                   </h3>
-                  <p className="leading-relaxed opacity-90">
+                  <p className="text-justify leading-relaxed opacity-90">
                     Git for version control, Indonesian (native), and English
                     (advanced).
                   </p>
@@ -539,7 +539,7 @@ export default function AboutPage() {
                   <h3 className={isDarkMode ? "text-cyan-400 font-bold mb-3" : "text-[#EDC92C] mb-3 font-bold"}>
                     Soft Skills
                   </h3>
-                  <p className="leading-relaxed opacity-90">
+                  <p className="text-justify leading-relaxed opacity-90">
                     Teamwork, quick learning, problem-solving, discipline, and
                     accountability.
                   </p>
