@@ -17,8 +17,11 @@ const geistMono = Geist_Mono({
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Duckfolio - Portofolio Danau",
+  title: "Duckfolio - Portofolio Novebrian",
   description: "Portofolio Next.js bertema air dan bebek",
+  icons: {
+    icon: "/ducky.webp",
+  },
 };
 
 export default function RootLayout({
