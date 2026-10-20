@@ -18,6 +18,12 @@ import { projects } from "@/data/projects";
 import { useTheme } from "@/components/ThemeProvider";
 import { useWaveTransition } from "@/components/WaveTransition";
 
+function truncateText(text: string, maxLength: number) {
+  return text.length > maxLength
+    ? `${text.slice(0, maxLength).trimEnd()}...`
+    : text;
+}
+
 export default function ProjectPage() {
   const {
     theme,
@@ -268,37 +274,43 @@ export default function ProjectPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -6 }}
-                  className={`h-full min-h-[290px] p-6 rounded-2xl border backdrop-blur-md text-left flex flex-col justify-between transition-all group ${isDarkMode ? "bg-slate-900/50 border-slate-800/80 hover:border-cyan-400" : "bg-white/10 border-white/10 hover:border-white"}`}
+                  className={`h-full min-h-[290px] cursor-pointer rounded-2xl border p-6 text-left backdrop-blur-md transition-all group ${isDarkMode ? "bg-slate-900/50 border-slate-800/80 hover:border-cyan-400" : "bg-white/10 border-white/10 hover:border-white"}`}
                 >
-                  <div>
-                    <div className="flex justify-between items-start mb-4">
-                      <div
-                        className={`p-3 rounded-xl ${isDarkMode ? "bg-slate-800" : "bg-white/20"}`}
-                      >
-                        <Code size={22} />
+                  <div className="flex h-full flex-col justify-between">
+                    <div>
+                      <div className="mb-4 flex items-start justify-between">
+                        <div
+                          className={`p-3 rounded-xl ${isDarkMode ? "bg-slate-800" : "bg-white/20"}`}
+                        >
+                          <Code size={22} />
+                        </div>
+                        <span
+                          title="Klik untuk melihat detail project"
+                          className="flex items-center gap-1.5 text-xs font-semibold opacity-100 transition-all sm:opacity-60 sm:group-hover:scale-105 sm:group-hover:opacity-100"
+                        >
+                          <span>Lihat detail</span>
+                          <ExternalLink size={18} />
+                        </span>
                       </div>
-                      <span className="opacity-60 group-hover:opacity-100">
-                        <ExternalLink size={18} />
-                      </span>
-                    </div>
-                    <h3 className="line-clamp-2 text-xl font-bold mb-2 group-hover:text-cyan-300 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p
-                      className={`project-description-clamp min-h-[4.5rem] text-sm mb-6 ${isDarkMode ? "text-slate-400" : "text-blue-100"}`}
-                    >
-                      {project.desc}
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((t) => (
-                      <span
-                        key={t}
-                        className={`text-xs font-semibold px-2.5 py-1 rounded-md ${isDarkMode ? "bg-slate-800 text-cyan-400" : "bg-blue-900/40 text-blue-100 border border-white/10"}`}
+                      <h3 className="mb-2 min-h-[3.5rem] text-xl font-bold leading-tight transition-colors group-hover:text-cyan-300">
+                        {truncateText(project.title, 52)}
+                      </h3>
+                      <p
+                        className={`mb-6 min-h-[4.5rem] text-sm leading-relaxed ${isDarkMode ? "text-slate-400" : "text-blue-100"}`}
                       >
-                        {t}
-                      </span>
-                    ))}
+                        {truncateText(project.desc, 145)}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((t) => (
+                        <span
+                          key={t}
+                          className={`text-xs font-semibold px-2.5 py-1 rounded-md ${isDarkMode ? "bg-slate-800 text-cyan-400" : "bg-blue-900/40 text-blue-100 border border-white/10"}`}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </motion.div>
               </Link>

@@ -521,7 +521,7 @@ export default function AboutPage() {
                     Web Development
                   </h3>
                   <p className="leading-relaxed opacity-90">
-                    PHP, CSS, JavaScript, MySQL, CodeIgniter 3/4, Laravel,
+                    PHP, CSS, JavaScript, MySQL, Python, CodeIgniter 3 & 4, Laravel,
                     Bootstrap, Tailwind CSS, Next.js, dan Framer Motion.
                   </p>
                 </div>
