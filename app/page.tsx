@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { Sun, Moon, ArrowRight, RotateCcw } from "lucide-react";
+import { Sun, Moon, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "@/components/ThemeProvider";
 import { useWaveTransition } from "@/components/WaveTransition";
@@ -11,8 +11,6 @@ export default function WaterPortfolio() {
   const {
     theme,
     isDarkMode,
-    hasManualOverride,
-    resetToAutomatic,
     toggleDarkMode,
   } = useTheme();
   const [ripples, setRipples] = useState<{ id: number; x: number; y: number }[]>([]);
@@ -59,32 +57,27 @@ export default function WaterPortfolio() {
       ))}
 
       <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2">
-        {hasManualOverride && (
-          <button
-            type="button"
-            onClick={resetToAutomatic}
-            aria-label="Kembali ke tema otomatis berdasarkan waktu"
-            title="Kembali ke tema otomatis"
-            className="flex h-12 items-center gap-2 rounded-full border border-white/40 bg-black/20 px-4 text-sm font-semibold text-white shadow-2xl backdrop-blur-md transition-all hover:scale-95 active:scale-90"
-          >
-            <RotateCcw size={18} />
-            Otomatis
-          </button>
-        )}
         <button
           onClick={toggleDarkMode}
-          aria-label="Ganti tema manual"
+          aria-label="Toggle theme manually"
           className={`flex items-center justify-center transition-all duration-300 ease-in-out border rounded-full shadow-2xl p-4 w-14 h-14 hover:scale-95 active:scale-90 ${
             isDarkMode ? "bg-[#1E3E62] text-yellow-400 border-slate-700 hover:bg-[#152C46]" : "bg-white text-indigo-900 border-blue-200 hover:bg-slate-50"
           }`}
         >
-          {isDarkMode ? <Sun size={24} className="flex-shrink-0" /> : <Moon size={24} className="flex-shrink-0" />}
+          {isDarkMode ? (
+            <Sun size={24} className="flex-shrink-0" />
+          ) : (
+            <Moon
+              size={24}
+              className="flex-shrink-0 text-yellow-200 drop-shadow-[0_0_8px_rgba(254,243,163,0.8)]"
+            />
+          )}
         </button>
       </div>
 
       <div className="absolute top-20 z-0 flex items-center justify-center pointer-events-none">
         {isDarkMode ? (
-          <svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="#E2E8F0" className="w-36 h-36 drop-shadow-[0_0_35px_rgba(226,232,240,0.6)] text-slate-200">
+          <svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="#FEF3A3" className="w-36 h-36 drop-shadow-[0_0_35px_rgba(254,243,163,0.75)] text-yellow-200">
             <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
           </svg>
         ) : (
@@ -97,10 +90,10 @@ export default function WaterPortfolio() {
 
       <div className="z-30 text-center space-y-6 mb-20 relative">
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight drop-shadow-sm">
-          Halo, Saya <span className={isDarkMode ? "text-cyan-400" : "text-blue-600"}>Novebrian Setya Purwanto</span>
+          Hello, I am <span className={isDarkMode ? "text-cyan-400" : "text-blue-600"}>Novebrian Setya Purwanto</span>
         </h1>
         <p className="text-xl md:text-2xl max-w-lg mx-auto font-medium opacity-80">
-          Mengarungi lautan kode dan menyelami ekosistem web dengan tenang seperti di danau.
+          Navigating the ocean of code and diving into the web ecosystem as calmly as a duck on a lake
           </p>
 
         <div className="w-full flex justify-center mt-6 mb-2">
@@ -116,7 +109,7 @@ export default function WaterPortfolio() {
             isDarkMode ? "bg-cyan-500 text-slate-900 hover:bg-cyan-400" : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
         >
-          Selami Portofolio <ArrowRight size={20} />
+          Dive into my portfolio <ArrowRight size={20} />
         </button>
       </div>
 

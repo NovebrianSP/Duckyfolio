@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, CalendarDays, Code2, Moon, RotateCcw, Sun } from "lucide-react";
+import { ArrowLeft, CalendarDays, Code2, Moon, Sun } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -14,6 +14,19 @@ import { projects } from "@/data/projects";
 import { useTheme } from "@/components/ThemeProvider";
 import { useWaveTransition } from "@/components/WaveTransition";
 
+const FLOATING_BUBBLES = [
+  { id: 1, left: "5%", size: 26, duration: 12, delay: -2, drift: 32 },
+  { id: 2, left: "14%", size: 48, duration: 16, delay: -9, drift: -42 },
+  { id: 3, left: "25%", size: 18, duration: 10, delay: -5, drift: 28 },
+  { id: 4, left: "36%", size: 36, duration: 14, delay: -11, drift: -34 },
+  { id: 5, left: "48%", size: 58, duration: 19, delay: -15, drift: 44 },
+  { id: 6, left: "59%", size: 22, duration: 11, delay: -7, drift: -30 },
+  { id: 7, left: "69%", size: 42, duration: 15, delay: -13, drift: 36 },
+  { id: 8, left: "79%", size: 20, duration: 13, delay: -4, drift: -26 },
+  { id: 9, left: "88%", size: 52, duration: 18, delay: -12, drift: 40 },
+  { id: 10, left: "94%", size: 24, duration: 11, delay: -6, drift: -32 },
+];
+
 export default function ShowcasePage() {
   return (
     <Suspense fallback={<ShowcaseLoading />}>
@@ -25,7 +38,7 @@ export default function ShowcasePage() {
 function ShowcaseLoading() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#050C14] text-white">
-      <p className="text-lg font-semibold">Memuat showcase...</p>
+      <p className="text-lg font-semibold">Loading showcase...</p>
     </main>
   );
 }
@@ -43,8 +56,6 @@ function ShowcaseContent() {
   const {
     theme,
     isDarkMode,
-    hasManualOverride,
-    resetToAutomatic,
     toggleDarkMode,
   } = useTheme();
   const { navigate } = useWaveTransition();
@@ -88,12 +99,12 @@ function ShowcaseContent() {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#050C14] px-4 text-center text-white">
         <div>
-          <h1 className="text-3xl font-bold">Project tidak ditemukan</h1>
+          <h1 className="text-3xl font-bold">Project not found</h1>
           <Link
             href="/project"
             className="mt-6 inline-flex rounded-full bg-cyan-400 px-5 py-2.5 font-semibold text-slate-950"
           >
-            Kembali ke proyek
+            Back to projects
           </Link>
         </div>
       </main>
@@ -112,6 +123,51 @@ function ShowcaseContent() {
               : "bg-[#1A74E2] text-white"
       } relative`}
     >
+      <div
+        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        {FLOATING_BUBBLES.map((bubble) => (
+          <motion.div
+            key={bubble.id}
+            initial={{ y: "115vh", x: 0, opacity: 0 }}
+            animate={{
+              y: "-25vh",
+              x: [0, bubble.drift, 0],
+              opacity: [0, 0.78, 0.78, 0],
+            }}
+            transition={{
+              duration: bubble.duration,
+              delay: bubble.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+              x: {
+                duration: bubble.duration / 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+              opacity: {
+                duration: bubble.duration,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+            }}
+            className={`absolute bottom-0 rounded-full border ${
+              isDarkMode
+                ? "border-cyan-100/65 bg-cyan-100/20"
+                : "border-white/80 bg-white/35"
+            } shadow-[inset_-5px_-5px_9px_rgba(255,255,255,0.25),inset_3px_3px_6px_rgba(255,255,255,0.35),0_0_20px_rgba(186,230,253,0.4)]`}
+            style={{
+              left: bubble.left,
+              width: bubble.size,
+              height: bubble.size,
+            }}
+          >
+            <span className="absolute left-[20%] top-[16%] h-[25%] w-[25%] rounded-full bg-white/85 blur-[1px]" />
+          </motion.div>
+        ))}
+      </div>
+
       {ripples.map((ripple) => (
         <motion.div
           key={ripple.id}
@@ -144,7 +200,7 @@ function ShowcaseContent() {
         >
           <Image
             src="/swimduck.webp"
-            alt="Bebek Berenang"
+            alt="Swimming duck"
             width={48}
             height={48}
             className="object-contain"
@@ -153,36 +209,32 @@ function ShowcaseContent() {
         </motion.div>
       </div>
 
-      <div className="mx-auto flex max-w-4xl flex-col gap-10">
+      <div className="relative z-10 mx-auto flex max-w-4xl flex-col gap-10">
         <div className="flex items-center justify-between gap-4">
           <button
             type="button"
-            onClick={() => void navigate("/project", "Kembali ke project...")}
-            aria-label="Kembali ke proyek"
+            onClick={() => void navigate("/project", "Back to projects...")}
+            aria-label="Back to projects"
             className="fixed bottom-6 left-6 z-50 flex items-center gap-0 rounded-full border border-white/30 bg-white/10 p-3 font-semibold shadow-md backdrop-blur-md transition hover:bg-white/20 sm:gap-2 sm:px-5 sm:py-2.5"
           >
             <ArrowLeft size={18} />
-            <span className="hidden sm:inline">Kembali ke proyek</span>
+            <span className="hidden sm:inline">Back to projects</span>
           </button>
           <div className="flex items-center gap-2">
-            {hasManualOverride && (
-              <button
-                type="button"
-                onClick={resetToAutomatic}
-                title="Kembali ke tema otomatis"
-                className="flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-4 py-2.5 text-sm font-semibold backdrop-blur-md"
-              >
-                <RotateCcw size={16} />
-                Otomatis
-              </button>
-            )}
             <button
               type="button"
               onClick={toggleDarkMode}
-              aria-label="Ganti tema manual"
+              aria-label="Toggle theme manually"
               className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/15 backdrop-blur-md"
             >
-              {isDarkMode ? <Sun size={21} /> : <Moon size={21} />}
+              {isDarkMode ? (
+                <Sun size={21} />
+              ) : (
+                <Moon
+                  size={21}
+                  className="text-yellow-200 drop-shadow-[0_0_8px_rgba(254,243,163,0.8)]"
+                />
+              )}
             </button>
           </div>
         </div>
@@ -229,7 +281,7 @@ function ShowcaseContent() {
               </h1>
             </div>
 
-            <p className="max-w-3xl text-lg leading-relaxed opacity-90">
+            <p className="max-w-3xl text-justify text-lg leading-relaxed opacity-90">
               {project.desc}
             </p>
 
@@ -253,7 +305,7 @@ function ShowcaseContent() {
               <div className="rounded-2xl border border-white/15 bg-black/10 p-5">
                 <div className="mb-3 flex items-center gap-2 font-semibold">
                   <CalendarDays size={20} />
-                  Tanggal pembuatan
+                  Date created
                 </div>
                 <p className="text-lg font-semibold">{project.createdAt}</p>
               </div>
@@ -268,7 +320,7 @@ function ShowcaseContent() {
               <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
                 <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2.17c-3.22.7-3.9-1.36-3.9-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.57-.29-5.27-1.29-5.27-5.74 0-1.27.45-2.3 1.2-3.11-.12-.29-.52-1.47.11-3.07 0 0 .98-.31 3.16 1.19a10.9 10.9 0 0 1 5.76 0c2.18-1.5 3.16-1.19 3.16-1.19.63 1.6.23 2.78.11 3.07.75.81.2 1.84 1.2 3.11 0 4.46-2.71 5.45-5.29 5.74.41.36.78 1.08.78 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z" />
               </svg>
-              Lihat repository GitHub
+              View GitHub repository
             </a>
           </div>
         </motion.section>

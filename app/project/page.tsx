@@ -10,7 +10,6 @@ import {
   User,
   Briefcase,
   ExternalLink,
-  RotateCcw,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,8 +27,6 @@ export default function ProjectPage() {
   const {
     theme,
     isDarkMode,
-    hasManualOverride,
-    resetToAutomatic,
     toggleDarkMode,
   } = useTheme();
   const [ripples, setRipples] = useState<
@@ -170,7 +167,7 @@ export default function ProjectPage() {
         >
           <Image
             src="/swimduck.webp"
-            alt="Bebek Berenang"
+            alt="Swimming duck"
             width={48}
             height={48}
             className="object-contain"
@@ -180,25 +177,20 @@ export default function ProjectPage() {
       </div>
 
       <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2">
-        {hasManualOverride && (
-          <button
-            type="button"
-            onClick={resetToAutomatic}
-            aria-label="Kembali ke tema otomatis berdasarkan waktu"
-            title="Kembali ke tema otomatis"
-            className="flex h-12 items-center gap-2 rounded-full border border-white/40 bg-black/20 px-4 text-sm font-semibold text-white shadow-2xl backdrop-blur-md transition-all hover:scale-95 active:scale-90"
-          >
-            <RotateCcw size={18} />
-            Otomatis
-          </button>
-        )}
         <button
           type="button"
           onClick={toggleDarkMode}
-          aria-label="Ganti tema manual"
+          aria-label="Toggle theme manually"
           className={`flex items-center justify-center border rounded-full shadow-2xl p-4 w-14 h-14 ${isDarkMode ? "bg-[#1E3E62] text-yellow-400 border-slate-700" : "bg-white text-indigo-900 border-blue-200"}`}
         >
-          {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+          {isDarkMode ? (
+            <Sun size={24} />
+          ) : (
+            <Moon
+              size={24}
+              className="text-yellow-200 drop-shadow-[0_0_8px_rgba(254,243,163,0.8)]"
+            />
+          )}
         </button>
       </div>
 
@@ -207,8 +199,8 @@ export default function ProjectPage() {
           <svg
             xmlns="http://w3.org"
             viewBox="0 0 24 24"
-            fill="#E2E8F0"
-            className="w-36 h-36 text-slate-200"
+            fill="#FEF3A3"
+            className="w-36 h-36 text-yellow-200 drop-shadow-[0_0_35px_rgba(254,243,163,0.75)]"
           >
             <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
           </svg>
@@ -232,8 +224,8 @@ export default function ProjectPage() {
 
       <button
         type="button"
-        onClick={() => void navigate("/about", "Naik ke permukaan...")}
-        aria-label="Kembali ke penyelam"
+        onClick={() => void navigate("/about", "Back to the diver...")}
+        aria-label="Return to the diver"
         className={`fixed bottom-6 left-6 z-50 flex items-center gap-0 rounded-full border p-3 font-semibold shadow-md backdrop-blur-md transition-all active:scale-95 sm:gap-2 sm:px-5 sm:py-2.5 ${
           isDarkMode
             ? "bg-slate-900/80 border-slate-700 text-cyan-400 hover:bg-slate-900"
@@ -241,7 +233,7 @@ export default function ProjectPage() {
         }`}
       >
         <ArrowLeft size={18} />
-        <span className="hidden sm:inline">Kembali ke penyelam</span>
+        <span className="hidden sm:inline">Back to the Diver</span>
       </button>
 
       <div className="max-w-4xl w-full space-y-24 z-20 relative">
@@ -252,7 +244,7 @@ export default function ProjectPage() {
               size={28}
             />
             <h2 className="text-3xl font-bold tracking-tight">
-              Eksplorasi Proyek
+              Project Exploration
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -264,7 +256,7 @@ export default function ProjectPage() {
                   event.preventDefault();
                   void navigate(
                     `/project/showcase/${project.id}`,
-                    "Masuk showcase...",
+                    "Diving into showcase...",
                   );
                 }}
                 className="block h-full"
@@ -285,10 +277,10 @@ export default function ProjectPage() {
                           <Code size={22} />
                         </div>
                         <span
-                          title="Klik untuk melihat detail project"
+                          title="Click to view project details"
                           className="flex items-center gap-1.5 text-xs font-semibold opacity-100 transition-all sm:opacity-60 sm:group-hover:scale-105 sm:group-hover:opacity-100"
                         >
-                          <span>Lihat detail</span>
+                          <span>View details</span>
                           <ExternalLink size={18} />
                         </span>
                       </div>
@@ -296,7 +288,7 @@ export default function ProjectPage() {
                         {truncateText(project.title, 52)}
                       </h3>
                       <p
-                        className={`mb-6 min-h-[4.5rem] text-sm leading-relaxed ${isDarkMode ? "text-slate-400" : "text-blue-100"}`}
+                        className={`mb-6 min-h-[4.5rem] text-justify text-sm leading-relaxed ${isDarkMode ? "text-slate-400" : "text-blue-100"}`}
                       >
                         {truncateText(project.desc, 145)}
                       </p>

@@ -38,13 +38,13 @@ export default function WaveTransition({
   const controls = useAnimation();
   const isNavigating = useRef(false);
   const coverAnimation = useRef<Promise<void> | null>(null);
-  const [transitionMessage, setTransitionMessage] = useState("Menyelam...");
+  const [transitionMessage, setTransitionMessage] = useState("Diving...");
   const handleReveal = useCallback(() => {
     isNavigating.current = false;
     coverAnimation.current = null;
   }, []);
 
-  const startTransition = useCallback(async (message = "Menyelam...") => {
+  const startTransition = useCallback(async (message = "Diving...") => {
     if (isNavigating.current) return;
 
     isNavigating.current = true;
@@ -64,7 +64,7 @@ export default function WaveTransition({
     }
   }, [controls]);
 
-  const navigate = useCallback(async (href: string, message = "Menyelam...") => {
+  const navigate = useCallback(async (href: string, message = "Diving...") => {
     await startTransition(message);
     router.push(href);
   }, [router, startTransition]);

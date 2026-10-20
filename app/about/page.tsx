@@ -9,7 +9,6 @@ import {
   Code,
   User,
   Briefcase,
-  RotateCcw,
   ArrowRight,
 } from "lucide-react";
 import Image from "next/image";
@@ -23,8 +22,6 @@ export default function AboutPage() {
   const {
     theme,
     isDarkMode,
-    hasManualOverride,
-    resetToAutomatic,
     toggleDarkMode,
   } = useTheme();
   const [ripples, setRipples] = useState<
@@ -167,7 +164,7 @@ export default function AboutPage() {
         >
           <Image
             src="/swimduck.webp"
-            alt="Bebek Berenang"
+            alt="Swimming duck"
             width={48}
             height={48}
             className="object-contain"
@@ -177,25 +174,20 @@ export default function AboutPage() {
       </div>
 
       <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2">
-        {hasManualOverride && (
-          <button
-            type="button"
-            onClick={resetToAutomatic}
-            aria-label="Kembali ke tema otomatis berdasarkan waktu"
-            title="Kembali ke tema otomatis"
-            className="flex h-12 items-center gap-2 rounded-full border border-white/40 bg-black/20 px-4 text-sm font-semibold text-white shadow-2xl backdrop-blur-md transition-all hover:scale-95 active:scale-90"
-          >
-            <RotateCcw size={18} />
-            Otomatis
-          </button>
-        )}
         <button
           type="button"
           onClick={toggleDarkMode}
-          aria-label="Ganti tema manual"
+          aria-label="Toggle theme manually"
           className={`flex items-center justify-center border rounded-full shadow-2xl p-4 w-14 h-14 ${isDarkMode ? "bg-[#1E3E62] text-yellow-400 border-slate-700" : "bg-white text-indigo-900 border-blue-200"}`}
         >
-          {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+          {isDarkMode ? (
+            <Sun size={24} />
+          ) : (
+            <Moon
+              size={24}
+              className="text-yellow-200 drop-shadow-[0_0_8px_rgba(254,243,163,0.8)]"
+            />
+          )}
         </button>
       </div>
 
@@ -204,8 +196,8 @@ export default function AboutPage() {
           <svg
             xmlns="http://w3.org"
             viewBox="0 0 24 24"
-            fill="#E2E8F0"
-            className="w-36 h-36 text-slate-200"
+            fill="#FEF3A3"
+            className="w-36 h-36 text-yellow-200 drop-shadow-[0_0_35px_rgba(254,243,163,0.75)]"
           >
             <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
           </svg>
@@ -229,8 +221,8 @@ export default function AboutPage() {
 
       <button
         type="button"
-        onClick={() => void navigate("/", "Naik ke permukaan...")}
-        aria-label="Kembali ke permukaan"
+        onClick={() => void navigate("/", "Back to the surface...")}
+        aria-label="Return to the surface"
         className={`fixed bottom-6 left-6 z-50 flex items-center gap-0 rounded-full border p-3 font-semibold shadow-md backdrop-blur-md transition-all active:scale-95 sm:gap-2 sm:px-5 sm:py-2.5 ${
           isDarkMode
             ? "bg-slate-900/80 border-slate-700 text-cyan-400 hover:bg-slate-900"
@@ -238,11 +230,11 @@ export default function AboutPage() {
         }`}
       >
         <ArrowLeft size={18} />
-        <span className="hidden sm:inline">Kembali ke Permukaan</span>
+        <span className="hidden sm:inline">Back to the Surface</span>
       </button>
 
       <div className="z-20 grid w-full max-w-6xl grid-cols-1 items-start gap-8 lg:grid-cols-[280px_minmax(0,1fr)]">
-        <nav className="flex flex-col gap-4" aria-label="Navigasi tentang saya">
+        <nav className="flex flex-col gap-4" aria-label="About me navigation">
           <button
             type="button"
             onClick={() => setActiveSection("about")}
@@ -256,7 +248,7 @@ export default function AboutPage() {
                   : "bg-white/20 text-white hover:bg-white/35"
             }`}
           >
-            Tentang Saya
+            About Me
           </button>
           <button
             type="button"
@@ -271,7 +263,7 @@ export default function AboutPage() {
                   : "bg-white/20 text-white hover:bg-white/35"
             }`}
           >
-            Pendidikan
+            Education
           </button>
           <button
             type="button"
@@ -286,7 +278,7 @@ export default function AboutPage() {
                   : "bg-white/20 text-white hover:bg-white/35"
             }`}
           >
-            Keahlian
+            Skills
           </button>
         </nav>
 
@@ -304,14 +296,14 @@ export default function AboutPage() {
                   size={28}
                 />
                 <h2 className="text-3xl font-bold tracking-tight">
-                  Tentang Penyelam Kode
+                  About the Code Diver
                 </h2>
               </div>
               <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-3">
                 <div className="relative mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-white/60 bg-gradient-to-br from-white/40 via-sky-200/30 to-blue-500/30 text-5xl shadow-[inset_-8px_-10px_18px_rgba(30,116,226,0.28),inset_8px_8px_14px_rgba(255,255,255,0.65),0_10px_24px_rgba(7,67,145,0.3)] md:mx-0">
                   <Image
                     src="/profile.png"
-                    alt="Bebek Tech"
+                    alt="Tech duck"
                     fill
                     className="object-cover object-[center_top]"
                     style={{ transform: "scale(2) translateY(30%)" }}
@@ -321,20 +313,20 @@ export default function AboutPage() {
                   <span className="pointer-events-none absolute top-7 left-2 h-2 w-2 rounded-full bg-white/70" />
                 </div>
                 <div className="space-y-4 text-lg leading-relaxed opacity-90 md:col-span-2">
-                  <p>
-                    Saya adalah{" "}
+                  <p className="text-justify">
+                    I am{" "}
                     <span
                       className={
-                        isDarkMode ? "text-cyan-400" : "text-[#1E3E62]"
+                        isDarkMode ? "text-cyan-400 font-bold drop-shadow-[0_0_8px_rgba(34,211,238,0.3)]" : "text-[#FFF83F] font-bold"
                       }
                     >
                       Novebrian Setya Purwanto
                     </span>
-                    , Junior Web Developer yang antusias dalam membangun
-                    aplikasi web yang interaktif dan user-friendly. Selalu
-                    tertarik mengeksplorasi teknologi terbaru agar tetap relevan
-                    dengan tren industri. Berkomitmen tinggi untuk menghadirkan
-                    karya berkualitas dan memenuhi tenggat waktu proyek.
+                    , an enthusiastic Junior Web Developer who enjoys building
+                    interactive and user-friendly web applications. I am always
+                    interested in exploring the latest technologies to stay
+                    relevant to industry trends. I am committed to delivering
+                    high-quality work and meeting project deadlines.
                   </p>
                   <div className="flex flex-wrap items-center gap-3 pt-2">
                     <a
@@ -342,7 +334,7 @@ export default function AboutPage() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label="GitHub"
-                      title="Novebrian di GitHub"
+                      title="Novebrian on GitHub"
                       className={`flex h-10 w-10 items-center justify-center rounded-full border transition-transform hover:scale-110 ${
                         isDarkMode
                           ? "border-cyan-400/70 text-cyan-400 hover:bg-cyan-400/10"
@@ -358,7 +350,7 @@ export default function AboutPage() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label="LinkedIn"
-                      title="Novebrian di LinkedIn"
+                      title="Novebrian on LinkedIn"
                       className={`flex h-10 w-10 items-center justify-center rounded-full border transition-transform hover:scale-110 ${
                         isDarkMode
                           ? "border-cyan-400/70 text-cyan-400 hover:bg-cyan-400/10"
@@ -374,7 +366,7 @@ export default function AboutPage() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Discord"
-                      title="Novebrian di Discord"
+                      title="Novebrian on Discord"
                       className={`flex h-10 w-10 items-center justify-center rounded-full border transition-transform hover:scale-110 ${
                         isDarkMode
                           ? "border-cyan-400/70 text-cyan-400 hover:bg-cyan-400/10"
@@ -390,7 +382,7 @@ export default function AboutPage() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Instagram"
-                      title="Novebrian di Instagram"
+                      title="Novebrian on Instagram"
                       className={`flex h-10 w-10 items-center justify-center rounded-full border transition-transform hover:scale-110 ${
                         isDarkMode
                           ? "border-cyan-400/70 text-cyan-400 hover:bg-cyan-400/10"
@@ -420,7 +412,7 @@ export default function AboutPage() {
                   size={28}
                 />
                 <h2 className="text-3xl font-bold tracking-tight">
-                  Pendidikan
+                  Education
                 </h2>
               </div>
               <div className="space-y-8 text-lg">
@@ -430,7 +422,7 @@ export default function AboutPage() {
                       S1 Sistem Informasi, Sarjana Komputer
                     </h3>
                     <span className="font-semibold opacity-80">
-                      September 2022 - Maret 2026
+                      September 2022 - March 2026
                     </span>
                   </div>
                   <p
@@ -441,8 +433,8 @@ export default function AboutPage() {
                     Universitas AMIKOM Yogyakarta
                   </p>
                   <p className="mt-2 text-base opacity-80">
-                    Spesialisasi Digital Business dan Developer Web serta Mobile
-                    Apps.
+                    Specializing in Digital Business, Web Development, and
+                    Mobile App Development.
                   </p>
                 </div>
                 <div className="border-l-4 border-cyan-400 pl-5">
@@ -451,7 +443,7 @@ export default function AboutPage() {
                       Siswa Jurusan Ilmu Pengetahuan Sosial
                     </h3>
                     <span className="font-semibold opacity-80">
-                      Juli 2017 - Juli 2020
+                      July 2017 - July 2020
                     </span>
                   </div>
                   <p
@@ -464,37 +456,37 @@ export default function AboutPage() {
                 </div>
                 <div className="border-l-4 border-cyan-400 pl-5">
                   <h3 className="font-bold">
-                    Pengalaman Akademik dan Volunteer
+                    Academic and Volunteer Experience
                   </h3>
                   <p className="mt-2 opacity-90">
-                    Asisten Laboratorium Komputer, Forum Asisten Amikom
-                    Yogyakarta (Oktober 2024 - Agustus 2025).
+                    Computer Laboratory Assistant, Amikom Yogyakarta Assistant
+                    Forum (October 2024 - August 2025).
                   </p>
                   <ul className="mt-3 list-disc space-y-1 pl-5 text-base opacity-85">
                     <li>
-                      Praktikum Perancangan Basis Data untuk program studi
-                      D3-Manajemen Informatika.
+                      Database Design practicum for the D3 Informatics
+                      Management program.
                     </li>
                     <li>
-                      Praktikum Struktur Data untuk program studi S1-Sistem
-                      Informasi.
+                      Data Structures practicum for the S1 Information Systems
+                      program.
                     </li>
                     <li>
-                      Praktikum Digital Business untuk program studi S1-Sistem
-                      Informasi.
+                      Digital Business practicum for the S1 Information Systems
+                      program.
                     </li>
                     <li>
-                      Praktikum Statistika untuk program studi S1-Sistem
-                      Informasi.
+                      Statistics practicum for the S1 Information Systems
+                      program.
                     </li>
                     <li>
-                      Praktikum Pemrograman Terstruktur untuk program studi
-                      S1-Sistem Informasi.
+                      Structured Programming practicum for the S1 Information
+                      Systems program.
                     </li>
                   </ul>
                   <p className="mt-2 opacity-90">
-                    Asisten Instruktur Technology Engineering Project - Divisi
-                    Mobile Apps (Desember 2024).
+                    Assistant Instructor for the Technology Engineering Project
+                    - Mobile Apps Division (December 2024).
                   </p>
                 </div>
               </div>
@@ -510,44 +502,46 @@ export default function AboutPage() {
             >
               <div className="mb-8 flex items-center gap-3">
                 <Code
-                  className={isDarkMode ? "text-cyan-400" : "text-blue-200"}
+                  className={isDarkMode ? "text-[#EDC92C]" : "text-blue-200"}
                   size={28}
                 />
-                <h2 className="text-3xl font-bold tracking-tight">Keahlian</h2>
+                <h2 className="text-3xl font-bold tracking-tight">Skills</h2>
               </div>
               <div className="grid gap-6 text-lg md:grid-cols-2">
                 <div>
-                  <h3 className="mb-3 font-bold text-cyan-400">
+                  <h3 className={isDarkMode ? "text-cyan-400 font-bold mb-3" : "text-[#EDC92C] mb-3 font-bold"}>
                     Web Development
                   </h3>
                   <p className="leading-relaxed opacity-90">
                     PHP, CSS, JavaScript, MySQL, Python, CodeIgniter 3 & 4, Laravel,
-                    Bootstrap, Tailwind CSS, Next.js, dan Framer Motion.
+                    Bootstrap, Tailwind CSS, Next.js, and Framer Motion.
                   </p>
                 </div>
                 <div>
-                  <h3 className="mb-3 font-bold text-cyan-400">
+                  <h3 className={isDarkMode ? "text-cyan-400 font-bold mb-3" : "text-[#EDC92C] mb-3 font-bold"}>
                     Mobile Development
                   </h3>
                   <p className="leading-relaxed opacity-90">
-                    Flutter, Dart, Kotlin, serta pengembangan aplikasi mobile
-                    yang responsif dan mudah digunakan.
+                    Flutter, Dart, Kotlin, and responsive, user-friendly mobile
+                    application development.
                   </p>
                 </div>
                 <div>
-                  <h3 className="mb-3 font-bold text-cyan-400">
-                    Tools dan Bahasa
+                  <h3 className={isDarkMode ? "text-cyan-400 font-bold mb-3" : "text-[#EDC92C] mb-3 font-bold"}>
+                    Tools and Languages
                   </h3>
                   <p className="leading-relaxed opacity-90">
-                    Git sebagai version control, Bahasa Indonesia (native), dan
-                    Bahasa Inggris (advanced).
+                    Git for version control, Indonesian (native), and English
+                    (advanced).
                   </p>
                 </div>
                 <div>
-                  <h3 className="mb-3 font-bold text-cyan-400">Soft Skills</h3>
+                  <h3 className={isDarkMode ? "text-cyan-400 font-bold mb-3" : "text-[#EDC92C] mb-3 font-bold"}>
+                    Soft Skills
+                  </h3>
                   <p className="leading-relaxed opacity-90">
-                    Kerja sama tim, cepat belajar, problem solving, disiplin,
-                    dan bertanggung jawab.
+                    Teamwork, quick learning, problem-solving, discipline, and
+                    accountability.
                   </p>
                 </div>
               </div>
@@ -563,7 +557,7 @@ export default function AboutPage() {
                 : "bg-blue-600 text-white hover:bg-blue-700"
             }`}
           >
-            Menyelam ke kedalamanan Proyek <ArrowRight size={20} />
+            Dive into the Projects <ArrowRight size={20} />
           </button>
         </div>
       </div>

@@ -19,6 +19,7 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 const THEME_STORAGE_KEY = "duckyfolio-theme-override";
+const AUTO_THEME_ENABLED = false;
 
 export type TimeTheme = "dawn" | "day" | "sunset" | "midnight";
 
@@ -66,8 +67,12 @@ export default function ThemeProvider({
       setAutomaticTheme(getTimeTheme(new Date()));
     };
 
-    updateAutomaticTheme();
-    const intervalId = window.setInterval(updateAutomaticTheme, 60_000);
+    let intervalId: number | undefined;
+
+    if (AUTO_THEME_ENABLED) {
+      updateAutomaticTheme();
+      intervalId = window.setInterval(updateAutomaticTheme, 60_000);
+    }
 
     try {
       const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
@@ -81,7 +86,11 @@ export default function ThemeProvider({
       hasLoadedTheme.current = true;
     }
 
-    return () => window.clearInterval(intervalId);
+    return () => {
+      if (intervalId !== undefined) {
+        window.clearInterval(intervalId);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -110,7 +119,9 @@ export default function ThemeProvider({
     setManualTheme(null);
   }, []);
 
-  const theme = manualTheme ?? automaticTheme;
+  const theme = AUTO_THEME_ENABLED
+    ? manualTheme ?? automaticTheme
+    : manualTheme ?? "midnight";
   const isDarkMode = theme === "midnight";
 
   return (

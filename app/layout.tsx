@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Duckfolio - Portofolio Novebrian",
-  description: "Portofolio Next.js bertema air dan bebek",
+  title: "Duckfolio - Novebrian's Portfolio",
+  description: "A water- and duck-themed Next.js portfolio",
   icons: {
     icon: "/ducky.webp",
   },
@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="en">
       <body className={inter.className}>
         <ThemeProvider>
           <WaveTransition>{children}</WaveTransition>
