@@ -185,7 +185,7 @@ export default function AboutPage() {
           ) : (
             <Moon
               size={24}
-              className="text-yellow-200 drop-shadow-[0_0_8px_rgba(254,243,163,0.8)]"
+              className="text-blue-500 drop-shadow-[0_0_8px_rgba(254,243,163,0.8)]"
             />
           )}
         </button>
@@ -338,7 +338,7 @@ export default function AboutPage() {
                       className={`flex h-10 w-10 items-center justify-center rounded-full border transition-transform hover:scale-110 ${
                         isDarkMode
                           ? "border-cyan-400/70 text-cyan-400 hover:bg-cyan-400/10"
-                          : "border-blue-700/60 text-blue-800 hover:bg-white/30"
+                          : "border-white text-[#FFF83F] hover:bg-white/30"
                       }`}
                     >
                       <svg viewBox="0 0 24 24" aria-hidden="true" className={socialIconClass}>
@@ -354,7 +354,7 @@ export default function AboutPage() {
                       className={`flex h-10 w-10 items-center justify-center rounded-full border transition-transform hover:scale-110 ${
                         isDarkMode
                           ? "border-cyan-400/70 text-cyan-400 hover:bg-cyan-400/10"
-                          : "border-blue-700/60 text-blue-800 hover:bg-white/30"
+                          : "border-white text-[#FFF83F] hover:bg-white/30"
                       }`}
                     >
                       <svg viewBox="0 0 24 24" aria-hidden="true" className={socialIconClass}>
@@ -370,7 +370,7 @@ export default function AboutPage() {
                       className={`flex h-10 w-10 items-center justify-center rounded-full border transition-transform hover:scale-110 ${
                         isDarkMode
                           ? "border-cyan-400/70 text-cyan-400 hover:bg-cyan-400/10"
-                          : "border-blue-700/60 text-blue-800 hover:bg-white/30"
+                          : "border-white text-[#FFF83F] hover:bg-white/30"
                       }`}
                     >
                       <svg viewBox="0 0 24 24" aria-hidden="true" className={socialIconClass}>
@@ -386,7 +386,7 @@ export default function AboutPage() {
                       className={`flex h-10 w-10 items-center justify-center rounded-full border transition-transform hover:scale-110 ${
                         isDarkMode
                           ? "border-cyan-400/70 text-cyan-400 hover:bg-cyan-400/10"
-                          : "border-blue-700/60 text-blue-800 hover:bg-white/30"
+                          : "border-white text-[#FFF83F] hover:bg-white/30"
                       }`}
                     >
                       <svg viewBox="0 0 24 24" aria-hidden="true" className={socialIconClass}>

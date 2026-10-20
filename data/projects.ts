@@ -36,4 +36,13 @@ export const projects: Project[] = [
     createdAt: "July 7, 2025",
     githubUrl: "https://github.com/NovebrianSP/sadar-app",
   },
+  {
+    id: "agaricus-lepiota",
+    title: "Agaricus Lepiota - Mycological Research App",
+    image: "/agaricus.webp",
+    desc: "This application is a Streamlit-based mushroom classification system that can predict whether a mushroom is edible or poisonous, and it also features a data visualization dashboard. It utilizes a high-accuracy Random Forest model, with the training and prediction processes separated to ensure the application runs quickly and efficiently.",
+    tech: ["PYTHON", "DJANGO", "FLASK", "STREAMLIT", "RANDOM FOREST"],
+    createdAt: "June 16, 2025 - July 1, 2025",
+    githubUrl: "https://github.com/NovebrianSP/agaricus-lepiota",
+  },
 ];

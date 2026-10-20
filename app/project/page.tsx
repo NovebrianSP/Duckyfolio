@@ -188,7 +188,7 @@ export default function ProjectPage() {
           ) : (
             <Moon
               size={24}
-              className="text-yellow-200 drop-shadow-[0_0_8px_rgba(254,243,163,0.8)]"
+              className="text-blue-500 drop-shadow-[0_0_8px_rgba(254,243,163,0.8)]"
             />
           )}
         </button>
