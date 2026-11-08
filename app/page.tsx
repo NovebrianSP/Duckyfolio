@@ -6,6 +6,25 @@ import { Sun, Moon, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "@/components/ThemeProvider";
 import { useWaveTransition } from "@/components/WaveTransition";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Duckfolio | Portofolio Novebrian Setya Purwanto",
+  
+  description: "Duckfolio adalah website portofolio resmi Novebrian Setya Purwanto (Brian), seorang web developer yang berfokus pada ekosistem modern web development.",
+  
+  keywords: ["Novebrian", "Brian", "Duckfolio", "Novebrian Setya Purwanto", "Web Developer Indonesia"],
+  
+  authors: [{ name: "Novebrian Setya Purwanto" }],
+  
+  openGraph: {
+    title: "Duckfolio - Novebrian Setya Purwanto",
+    description: "Navigating the ocean of code and diving into the web ecosystem as calmly as a duck on a lake",
+    url: "https://brian-duckyfolio.vercel.app",
+    siteName: "Duckfolio",
+    type: "website",
+  },
+};
 
 export default function WaterPortfolio() {
   const {
